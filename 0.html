@@ -1,0 +1,107 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./js/style.css">
+
+<script type="text/javascript">
+  const element_num = 5; // セリフ数
+</script>
+<script src="js/img_lib.js"></script>
+<script src="./js/imgs.js"></script>
+<script src="./js/innertext.js"></script>
+<script src="./js/script.js"></script>
+<script type="text/javascript">
+  let window_h = 760;
+  let img_w = 400;
+  window.addEventListener("load",function() {
+    window_h = document.body.clientHeight;
+    document.getElementById("main_img").style.height = window_h;
+    img_reset(CG_src, document.getElementById("main_img"));
+    img_w = document.getElementById("main_img").clientWidth;
+    document.getElementById("form_area").style.left = img_w + 30;
+    for (let j = 0; j < element_num; j++){
+      setSerifu(j);
+    }
+    //console.log(window_h, img_w);
+  });
+</script>
+
+
+</head>
+
+<body>
+<div style="position:absolute; top:0px; left:0px;">
+  <img src="js/noH.png" name="0" id="main_img" class="main_img" alt=""/>
+</div>
+<span id="serifu0" draggable="true" class="tate Mjurran" ></span>
+<span id="serifu1" draggable="true" class="tate Mjurran" ></span>
+<span id="serifu2" draggable="true" class="tate man" ></span>
+<span id="serifu3" draggable="true" class="tate man" ></span>
+<span id="serifu4" draggable="true" class="tate narrator" ></span>
+<div style="position:absolute;" id="form_area">
+  <form action="" onChange="setText()" onsubmit="return false;" style="border: 1px;" >
+    <span style="margin-left: 0.1rem;">index: </span>
+    <input type="number" id="serifu_index" class="input" value=0 />
+    <br />
+    <span style="margin-left: 0.1rem;">left: </span>
+    <input type="number" id="left0" class="input" /> %
+    <span style="margin-left: 1rem;">top: </span>
+    <input type="number" id="top0" class="input" />%<br />
+    <textarea type="text" id="inputtext0" class="inputtext" wrap="hard" ></textarea>
+    <br /><br />
+    <span style="margin-left: 0.1rem;">left: </span>
+    <input type="number" id="left1" class="input" /> %
+    <span style="margin-left: 1rem;">top: </span>
+    <input type="number" id="top1" class="input" />%<br />
+    <textarea type="text" id="inputtext1" class="inputtext" wrap="hard"></textarea>
+    <br /><br />
+    <span style="margin-left: 0.1rem;">left: </span>
+    <input type="number" id="left2" class="input" /> %
+    <span style="margin-left: 1rem;">top: </span>
+    <input type="number" id="top2" class="input" />%<br />
+    <textarea type="text" id="inputtext2" class="inputtext" wrap="hard"></textarea>
+    <br /><br />
+    <span style="margin-left: 0.1rem;">left: </span>
+    <input type="number" id="left3" class="input" /> %
+    <span style="margin-left: 1rem;">top: </span>
+    <input type="number" id="top3" class="input" />%<br />
+    <textarea type="text" id="inputtext3" class="inputtext" wrap="hard"></textarea>
+    <br /><br />
+    <span style="margin-left: 0.1rem;">left: </span>
+    <input type="number" id="left4" class="input" /> %
+    <span style="margin-left: 1rem;">top: </span>
+    <input type="number" id="top4" class="input" />%<br />
+    <textarea type="text" id="inputtext4" class="inputtext" wrap="hard"></textarea>
+  </form>
+  <button class="dl" onclick="handleSessionStorage()">一時保存</button>
+  <button id="download" download="test.js" class="dl" onclick="handleDownload()">出力</button>
+</div>
+</body></html>
+
+<script type="text/javascript">
+  let focus_flag = false;
+  document.addEventListener("keydown", function (evnt) {
+    if(!focus_flag) {
+      if (evnt.key == 'ArrowLeft') { num_backward();}
+      else if (evnt.key  == 'ArrowRight') { num_forward();}
+      else if (evnt.key  == 'a') { num_backward();}
+      else if (evnt.key  == 'd') { num_forward();}
+      else if (evnt.key  == 'ArrowUp') { serifu_forward();}
+      else if (evnt.key  == 'ArrowDown') { serifu_backward();}
+      else if (evnt.key  == 'w') { serifu_forward();}
+      else if (evnt.key  == 's') { serifu_backward();}
+      else if (evnt.key  == 'r') { num_random();}
+    }
+  });
+  document.getElementById("serifu_index").onfocus = () => {focus_flag=true;};
+  document.getElementById("serifu_index").onblur  = () => {focus_flag=false;};
+  for (let j = 0; j < element_num; j++){
+    document.getElementById(`left${j}`).onfocus = () => {focus_flag=true;};
+    document.getElementById(`left${j}`).onblur  = () => {focus_flag=false;};
+    document.getElementById(`top${j}`).onfocus = () => {focus_flag=true;};
+    document.getElementById(`top${j}`).onblur  = () => {focus_flag=false;};
+    document.getElementById(`inputtext${j}`).onfocus = () => {focus_flag=true;};
+    document.getElementById(`inputtext${j}`).onblur  = () => {focus_flag=false;};
+  }
+</script>

@@ -1,0 +1,53 @@
+.main_img {
+  height:760px;
+  position:absolute;
+  z-index: -1;
+}
+.txt {
+  position:absolute;
+  font: bold;
+  font-size: 30px;
+  color: #ffffff;
+  background-color: transparent;
+  border-width: 0;
+  resize:none;
+  line-height: 130%;
+}
+.input{
+  width:3rem;
+}
+.inputtext{
+  width:25rem;
+  height:3rem;
+  margin-top: 1rem;
+}
+.tate{
+  position:absolute;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height:110%;
+  font-family:'Kosugi Maru', sans-serif;
+  padding: 0.6rem 0.2rem 0.6rem 0.1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);;
+}
+.Mjurran{
+  color: #29ff82;
+  background-color: rgba(255, 57, 172, 0.7);
+}
+.man{
+  color: #3737ff;
+  background-color: rgba(187, 187, 200, 0.7);
+}
+.narrator{
+  color: #000000;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.2rem;
+  padding: 1.2rem 0.7rem 1.2rem 0.6rem;
+  font-size: 1.125rem;
+}
+.dl{
+  position:relative;
+}
