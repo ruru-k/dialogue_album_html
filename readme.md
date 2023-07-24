@@ -2,7 +2,7 @@
 セリフを入れたアルバムを作成するjs。  
 
 表示する画像のパスを js/imgs.js に追加する。  
-gakkyuu
+
 |key|action|
 |-|-|
 |→, d|next image|
