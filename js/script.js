@@ -1,7 +1,6 @@
-let serifu_index = 0;
 let img_index = 0;
 const serifu_describe = () => {
-  document.getElementById(`serifu_index`).value = serifu_index;
+  document.getElementById(`scene-now`).innerText = img_index;
   for (let j = 0;  j < element_num; j++){
     setSerifu(j);
   }
@@ -9,7 +8,6 @@ const serifu_describe = () => {
 const num_backward = () => {
   img_backward(CG_src, document.getElementById('main_img'));
   img_index = Number(document.getElementById('main_img').name);
-  serifu_index = talk_txt[0][img_index][serifu_index] ? serifu_index : 0;
   img_w = document.getElementById("main_img").clientWidth;
   document.getElementById("form_area").style.left = img_w + 30;
   serifu_describe();
@@ -17,7 +15,6 @@ const num_backward = () => {
 const num_forward = () => {
   img_forward(CG_src, document.getElementById('main_img'));
   img_index = Number(document.getElementById('main_img').name);
-  serifu_index = talk_txt[0][img_index][serifu_index] ? serifu_index : 0;
   img_w = document.getElementById("main_img").clientWidth;
   document.getElementById("form_area").style.left = img_w + 30;
   serifu_describe();
@@ -27,31 +24,25 @@ const num_random = () => {
   img_same(CG_src, document.getElementById('main_img'), img_index);
   img_w = document.getElementById("main_img").clientWidth;
   document.getElementById("form_area").style.left = img_w + 30;
-  serifu_random();
-}
-const serifu_forward = () => {
-  serifu_index = ( serifu_index + 1 ) % talk_txt[0][img_index].length;
   serifu_describe();
 }
-
-const serifu_backward = () => {
-  serifu_index = ( serifu_index - 1 ) % talk_txt[0][img_index].length;
-  serifu_describe();
-}
-const serifu_random = () => {
-  serifu_index = getRandomInt(talk_txt[0][img_index].length);
+const num_set = () => {
+  img_index = document.getElementById(`scene-select`).value;
+  img_same(CG_src, document.getElementById('main_img'), img_index);
+  img_w = document.getElementById("main_img").clientWidth;
+  document.getElementById("form_area").style.left = img_w + 30;
   serifu_describe();
 }
 
 const handleDownload = () => {
   let data_csv="";//ここに文字データとして値を格納していく
+  console.log('talk_txt.length', talk_txt.length)
   for(let i = 0; i < talk_txt.length; i++){
-    for (let j = 0; j < element_num; j++){
-      const k_max = talk_txt[j][i]? talk_txt[j][i].length:0;
-      for (let k = 0; k < k_max; k++){
-        data_csv += `talk_x[${j}][${k}].push('${talk_x[j][i][k]}');\n`;
-        data_csv += `talk_y[${j}][${k}].push('${talk_y[j][i][k]}');\n`;
-        data_csv += `talk_txt[${j}][${k}].push('${talk_txt[j][i][k].replaceAll('\n', '\\n')}');\n`;
+    if (talk_txt[i].length) {
+      for (let j = 0; j < element_num; j++){
+        data_csv += `talk_x[${i}].push('${talk_x[i][j]}');\n`;
+        data_csv += `talk_y[${i}].push('${talk_y[i][j]}');\n`;
+        data_csv += `talk_txt[${i}].push('${talk_txt[i][j].replaceAll('\n', '\\n')}');\n`;
       }
     }
   }
@@ -77,57 +68,45 @@ const handleDownload = () => {
 const loadSessionStorage = () => {
   if (sessionStorage.getItem('talk_x')) {
     JSON.parse(sessionStorage.getItem('talk_x')).forEach((scene_element, i) => {
-      scene_element.forEach((element, j) => {
-        talk_x[i][j]=element;
-      });
+      talk_x[i]=scene_element;
     });
   }
   if (sessionStorage.getItem('talk_y')) {
     JSON.parse(sessionStorage.getItem('talk_y')).forEach((scene_element, i) => {
-      scene_element.forEach((element, j) => {
-        talk_y[i][j]=element;
-      });
+      talk_y[i]=scene_element;
     });
   }
   if (sessionStorage.getItem('talk_txt')) {
     JSON.parse(sessionStorage.getItem('talk_txt')).forEach((scene_element, i) => {
-      scene_element.forEach((element, j) => {
-        talk_txt[i][j]=element;
-      });
+      talk_txt[i]=scene_element;
     });
   }
 }
 loadSessionStorage();
 
 const setSerifu = (i) => {
-  document.getElementById(`left${i}`).value = talk_x[i][img_index][serifu_index];
-  document.getElementById(`top${i}`).value = talk_y[i][img_index][serifu_index];
-  document.getElementById(`inputtext${i}`).value = talk_txt[i][img_index][serifu_index] ? talk_txt[i][img_index][serifu_index] : null;
-  document.getElementById(`serifu${i}`).style.left = talk_x[i][img_index][serifu_index] * img_w / 100;
-  document.getElementById(`serifu${i}`).style.top = talk_y[i][img_index][serifu_index] * window_h / 100;
-  document.getElementById(`serifu${i}`).innerText = talk_txt[i][img_index][serifu_index] ? talk_txt[i][img_index][serifu_index] : null;
-  document.getElementById(`serifu${i}`).style.opacity = talk_txt[i][img_index][serifu_index] ? 1 : 0;
+  document.getElementById(`left${i}`).value = talk_x[img_index][i] ? talk_x[img_index][i] : 0;
+  document.getElementById(`top${i}`).value = talk_y[img_index][i] ? talk_y[img_index][i] : 0;
+  document.getElementById(`inputtext${i}`).value = talk_txt[img_index][i] ? talk_txt[img_index][i] : null;
+  document.getElementById(`serifu${i}`).style.left = talk_x[img_index][i] * img_w / 100;
+  document.getElementById(`serifu${i}`).style.top = talk_y[img_index][i] * window_h / 100;
+  document.getElementById(`serifu${i}`).innerText = talk_txt[img_index][i] ? talk_txt[img_index][i] : null;
+  document.getElementById(`serifu${i}`).style.opacity = talk_txt[img_index][i] ? 1 : 0;
 }
 
 const updateSerifu = (i) => {
-  talk_x[i][img_index][serifu_index] = document.getElementById(`left${i}`).value;
-  talk_y[i][img_index][serifu_index] = document.getElementById(`top${i}`).value;
-  talk_txt[i][img_index][serifu_index] = document.getElementById(`inputtext${i}`).value;
-  document.getElementById(`serifu${i}`).style.left = talk_x[i][img_index][serifu_index] * img_w / 100;
-  document.getElementById(`serifu${i}`).style.top = talk_y[i][img_index][serifu_index] * window_h / 100;
-  document.getElementById(`serifu${i}`).innerText = talk_txt[i][img_index][serifu_index];
+  talk_x[img_index][i] = document.getElementById(`left${i}`).value;
+  talk_y[img_index][i] = document.getElementById(`top${i}`).value;
+  talk_txt[img_index][i] = document.getElementById(`inputtext${i}`).value;
+  document.getElementById(`serifu${i}`).style.left = talk_x[img_index][i] * img_w / 100;
+  document.getElementById(`serifu${i}`).style.top = talk_y[img_index][i] * window_h / 100;
+  document.getElementById(`serifu${i}`).innerText = talk_txt[img_index][i];
+  document.getElementById(`serifu${i}`).style.opacity = talk_txt[img_index][i] ? 1 : 0;
 }
 
 const setText = () => {
-  if (serifu_index !== Number(document.getElementById("serifu_index").value)) {
-    serifu_index = Number(document.getElementById("serifu_index").value);
-    for (let j = 0; j < element_num; j++){
-      setSerifu(j);
-    }
-  } else {
-    for (let j = 0; j < element_num; j++){
-      updateSerifu(j);
-    }
+  for (let j = 0; j < element_num; j++){
+    updateSerifu(j);
   }
 }
 let pointerX, pointerY;
@@ -135,7 +114,6 @@ let pointerX, pointerY;
 const dragTextStart = (e) => {
   pointerX = e.screenX;
   pointerY = e.screenY;
-  console.log(pointerX, pointerY)
 }
 
 const dragTextEnd = (e, i) => {

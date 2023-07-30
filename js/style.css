@@ -32,8 +32,9 @@
   padding: 0.6rem 0.2rem 0.6rem 0.1rem;
   border-radius: 0.5rem;
   border: 1px solid rgba(0, 0, 0, 0.3);;
+  opacity: 0;
 }
-.Mjurran{
+.girl{
   color: #29ff82;
   background-color: rgba(255, 57, 172, 0.7);
 }
@@ -47,6 +48,13 @@
   border-radius: 0.2rem;
   padding: 1.2rem 0.7rem 1.2rem 0.6rem;
   font-size: 1.125rem;
+}
+.etc{
+  color: #ffffff;
+  border: 0px solid rgba(0, 0, 0, 0.3);
+  font-size: 2.5rem;
+  font-family:'Hiragino Kaku Gothic ProN', sans-serif;
+  font-weight: 500;
 }
 .dl{
   position:relative;

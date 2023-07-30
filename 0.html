@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="./js/style.css">
 
 <script type="text/javascript">
-  const element_num = 5; // セリフ数
+  const element_num = 7; // セリフ数
 </script>
 <script src="js/img_lib.js"></script>
 <script src="./js/imgs.js"></script>
@@ -34,45 +34,65 @@
 <div style="position:absolute; top:0px; left:0px;">
   <img src="js/noH.png" name="0" id="main_img" class="main_img" alt=""/>
 </div>
-<span id="serifu0" draggable="true" class="tate Mjurran" ></span>
-<span id="serifu1" draggable="true" class="tate Mjurran" ></span>
+<span id="serifu0" draggable="true" class="tate girl" ></span>
+<span id="serifu1" draggable="true" class="tate girl" ></span>
 <span id="serifu2" draggable="true" class="tate man" ></span>
 <span id="serifu3" draggable="true" class="tate man" ></span>
 <span id="serifu4" draggable="true" class="tate narrator" ></span>
+<span id="serifu5" draggable="true" class="tate narrator" ></span>
+<span id="serifu6" draggable="true" class="tate etc" ></span>
 <div style="position:absolute;" id="form_area">
+  ジャンプ：<span id="scene-now">0</span> ->
+  <select id="scene-select" onchange="num_set()">
+    <option value=0>0</option>
+    <option value=1>1</option>
+  </select><br /><br />
   <form action="" onChange="setText()" onsubmit="return false;" style="border: 1px;" >
-    <span style="margin-left: 0.1rem;">index: </span>
-    <input type="number" id="serifu_index" class="input" value=0 />
-    <br />
+    girl:
     <span style="margin-left: 0.1rem;">left: </span>
     <input type="number" id="left0" class="input" /> %
     <span style="margin-left: 1rem;">top: </span>
     <input type="number" id="top0" class="input" />%<br />
     <textarea type="text" id="inputtext0" class="inputtext" wrap="hard" ></textarea>
-    <br /><br />
+    <br /><span style="opacity: 0;">girl:</span>
     <span style="margin-left: 0.1rem;">left: </span>
     <input type="number" id="left1" class="input" /> %
     <span style="margin-left: 1rem;">top: </span>
     <input type="number" id="top1" class="input" />%<br />
     <textarea type="text" id="inputtext1" class="inputtext" wrap="hard"></textarea>
     <br /><br />
+    man:
     <span style="margin-left: 0.1rem;">left: </span>
     <input type="number" id="left2" class="input" /> %
     <span style="margin-left: 1rem;">top: </span>
     <input type="number" id="top2" class="input" />%<br />
     <textarea type="text" id="inputtext2" class="inputtext" wrap="hard"></textarea>
-    <br /><br />
+    <br /><span style="opacity: 0;">man:</span>
     <span style="margin-left: 0.1rem;">left: </span>
     <input type="number" id="left3" class="input" /> %
     <span style="margin-left: 1rem;">top: </span>
     <input type="number" id="top3" class="input" />%<br />
     <textarea type="text" id="inputtext3" class="inputtext" wrap="hard"></textarea>
     <br /><br />
+    narrator:
     <span style="margin-left: 0.1rem;">left: </span>
     <input type="number" id="left4" class="input" /> %
     <span style="margin-left: 1rem;">top: </span>
     <input type="number" id="top4" class="input" />%<br />
     <textarea type="text" id="inputtext4" class="inputtext" wrap="hard"></textarea>
+    <br /><span style="opacity: 0;">narrator:</span>
+    <span style="margin-left: 0.1rem;">left: </span>
+    <input type="number" id="left5" class="input" /> %
+    <span style="margin-left: 1rem;">top: </span>
+    <input type="number" id="top5" class="input" />%<br />
+    <textarea type="text" id="inputtext5" class="inputtext" wrap="hard"></textarea>
+    <br /><br />
+    etc:<br />
+    <span style="margin-left: 0.1rem;">left: </span>
+    <input type="number" id="left6" class="input" /> %
+    <span style="margin-left: 1rem;">top: </span>
+    <input type="number" id="top6" class="input" />%<br />
+    <textarea type="text" id="inputtext6" class="inputtext" wrap="hard"></textarea>
   </form>
   <button class="dl" onclick="handleSessionStorage()">一時保存</button>
   <button id="download" download="test.js" class="dl" onclick="handleDownload()">出力</button>
@@ -87,15 +107,9 @@
       else if (evnt.key  == 'ArrowRight') { num_forward();}
       else if (evnt.key  == 'a') { num_backward();}
       else if (evnt.key  == 'd') { num_forward();}
-      else if (evnt.key  == 'ArrowUp') { serifu_forward();}
-      else if (evnt.key  == 'ArrowDown') { serifu_backward();}
-      else if (evnt.key  == 'w') { serifu_forward();}
-      else if (evnt.key  == 's') { serifu_backward();}
       else if (evnt.key  == 'r') { num_random();}
     }
   });
-  document.getElementById("serifu_index").onfocus = () => {focus_flag=true;};
-  document.getElementById("serifu_index").onblur  = () => {focus_flag=false;};
   for (let j = 0; j < element_num; j++){
     document.getElementById(`left${j}`).onfocus = () => {focus_flag=true;};
     document.getElementById(`left${j}`).onblur  = () => {focus_flag=false;};
